@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://kit.fontawesome.com/141ceceedf.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+    <h1 id="page-heading">
+        <i class="fas fa-address-book"></i> My Contacts List
+    </h1>
+    <div id="container">
+        <ul id="contact-list">
+            <% contact_list.forEach (({name,phone,_id})=>{ %>
+                <li class="contact">
+                    <div class="contact-details">
+                        <p>
+                            <%= name %>
+                        </p>
+                        <p>
+                            <%= phone %>
+                        </p>
+                    </div>
+                    <div class="delete-button">
+                        <a href="/delete-contact/?id=<%=_id%>">
+                            <i class="fas fa-window-close"></i>
+                        </a>
+                        <!-- <form action="/delete-contact"         method="POST">
+                            <button name="phone" type="submit" value="<%=phone%>">Delete Button</button>
+                        </form> -->
+                    </div>
+                </li>
+                <% }) %>
+        </ul>
+        <form id="input-form" action="/create-contact" method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="number" name="phone" placeholder="Phone" required>
+
+            <button id="add-contact" type="submit">Add Contact</button>
+        </form>
+    </div>
+    <script src="js/home.js"></script>
+</body>
+
+</html>
