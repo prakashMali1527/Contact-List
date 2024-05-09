@@ -1,5 +1,4 @@
 const express = require('express');
-// const { lstat } = require('fs');
 const path = require('path');
 
 const port = 8000;  // port number
@@ -14,35 +13,6 @@ app.set('views', path.join(__dirname, 'views'));  // setting the views path
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'assets')));
 
-// middleware
-
-// middleware1
-// app.use(function (req, res, next) {
-//     console.log('middleware1');
-//     next();
-// });
-
-// app.use(function (req, res, next) {
-//     console.log('middleware 2');
-//     next();
-// });
-
-
-let contactList = [
-    {
-        name: 'Prakash',
-        phone: '113892284'
-    },
-    {
-        name: 'Rahul',
-        phone: '282228393'
-    },
-    {
-        name: 'Thanos',
-        phone: '7877829277'
-    }
-];
-
 app.get('/', function (req, res) {
     console.log(req.url);
 
@@ -55,6 +25,7 @@ app.get('/', function (req, res) {
             return res.render('home', info);
     }).catch(()=>{
             console.log('error in fetching data from db');
+            return res.send('<h1>Server side Error --> (Error in fetching data) </h1>');
     })
 });
 
@@ -74,16 +45,7 @@ app.post('/create-contact', function (req, res) {
     res.redirect('back');
 });
 
-// delete using {PARAM}
-app.get('/delete-contact/:phone', function (req, res) {
-    console.log(req.url);
-    console.log(req.params);
-    let phone = req.params.phone;
-    contactList = contactList.filter(({ phone: localPhone }) => localPhone != phone);
-    res.redirect('back');
-});
-
-// delete using {QUERY PARAM}
+// delete using {QUERY PARAM} 
 app.get('/delete-contact', function (req, res) {
     console.log(req.url);
     console.log(req.query);
@@ -97,16 +59,6 @@ app.get('/delete-contact', function (req, res) {
             return;
         }
     })
-    res.redirect('back');
-});
-
-// delete using form data
-app.post('/delete-contact', function (req, res) {
-    console.log(req.url);
-    console.log(req.body);
-    let { phone } = req.body;
-    console.log(phone);
-    contactList = contactList.filter(({ phone: localPhone }) => phone !== localPhone);
     res.redirect('back');
 });
 
